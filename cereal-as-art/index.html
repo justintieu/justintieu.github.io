@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cereal As Art</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+<body>
+  <h1>Cereal As Art</h1>
+  <h2>A new food photo every day for your new tab page</h2>
+  <div id="browser">
+    <span class="btn btn-red"></span>
+    <span class="btn btn-orange"></span>
+    <span class="btn btn-green"></span>
+    <div class="browser-chrome">
+      <div class="urlbar"></div>
+    </div>
+    <div class="browser-tab tab-1"></div>
+    <div class="browser-tab tab-2"><div class="photo"></div></div>
+  </div>
+  <a class="download" href="https://chrome.google.com/webstore/detail/cereal-as-art/ndilcmgomojhabbpmgjkcmokmghboeij/related">Download Chrome Extension</a>
+  <script>
+    // Wait a second, then open a new tab
+    setTimeout(function(){
+      var browserEl = document.getElementById('browser');
+      browserEl.setAttribute('class', 'newTab');
+    }, 1000)
+  </script>
+</body>
+</html>
