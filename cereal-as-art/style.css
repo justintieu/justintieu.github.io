@@ -126,10 +126,14 @@ h2 {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('http://search.chow.com/thumbnail/600/299/www.chow.com/assets/2014/06/cereal_lucky_charms_1920x1200.jpg');
+  background: url('http://i.imgur.com/1ggs4h0.jpg?5?2976');
   background-size: cover;
   border-radius: 0 0 4px 4px;
   -webkit-transition: background-image 1s ease-in-out;
+  -moz-transition: background-image 1s ease-in-out;
+  -ms-transition: background-image 1s ease-in-out;
+  -o-transition: background-image 1s ease-in-out;
+  transition: background-image 1s ease-in-out;
 }
 @-webkit-keyframes fadeIn {
   0%   { opacity: 0;}

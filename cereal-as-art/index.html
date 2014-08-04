@@ -17,11 +17,17 @@
     <div class="browser-tab tab-2"><div class="photo"></div></div>
   </div>
   <a class="download" href="https://chrome.google.com/webstore/detail/cereal-as-art/ndilcmgomojhabbpmgjkcmokmghboeij/related">Download Chrome Extension</a>
+  <script src="jquery-1.11.1.min.js"></script>
   <script>
     // Wait a second, then open a new tab
     setTimeout(function(){
       var browserEl = document.getElementById('browser');
       browserEl.setAttribute('class', 'newTab');
+
+      $('.photo').fadeTo('slow', 0.3, function() {
+        $(this).css('background-image', "url('http://search.chow.com/thumbnail/600/299/www.chow.com/assets/2014/06/cereal_lucky_charms_1920x1200.jpg')");
+        $(this).fadeIn(1000);
+      }).delay(500).fadeTo('slow', 1);
     }, 1000)
   </script>
 </body>
