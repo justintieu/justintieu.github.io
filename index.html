@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Justin Tieu | Home</title>
     <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="foundation-icons/foundation-icons.css">
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/vendor/modernizr.js"></script>
     <script src="js/foundation/foundation.js"></script>
@@ -15,14 +16,29 @@
       });
     </script>
     <style>
+    body {
+      /*background-image: url('img/bg.jpg');
+      background-repeat: no-repeat;
+      background-position: 50% 30%;*/
+      /*background: #323232;*/
+      /*color: #fff;*/
+    }
+    h1.title {
+      color: #FFF;
+    }
     .right.tab-bar-section {
       cursor: default;
     }
     .center {
       text-align: center;
     }
-    ul.small-block-grid-4 li div{
+    ul.medium-block-grid-4 {
+      padding: 20px;
+    }
+    ul.medium-block-grid-4 li div{
+      text-align: center;
       margin: auto;
+      font-weight: bold;
     }
     ul.off-canvas-list li a {
       display: block;
@@ -34,41 +50,57 @@
     .icon {
       width: 256px;
       min-height: 256px;
-      border-radius: 38px;
       overflow:hidden;
+      border-radius: 38px;
       border: solid 6px #666;
       position: relative;
       z-index: 10;
-      text-align: center;
       margin: 10px;
     }
-    .icon .gloss {
-      background: #56ABCB;
-      height: 144px;
-      width: 100%;
-      overflow: hidden;
-      position: relative;
-      z-index: 5;
-      border-top-right-radius: 170px 20px;
-      border-top-left-radius: 170px 20px;
-      border-bottom-right-radius: 40px;
-      border-bottom-left-radius: 40px;
-      position: absolute;
-      bottom: 0px;
+    .step {
+      display: inline-block;
+      line-height: 1;
+      width: 10%;
     }
+
+    .size-12 { font-size: 12px; }
+    
+    .size-14 { font-size: 14px; }
+    
+    .size-16 { font-size: 16px; }
+    
+    .size-18 { font-size: 18px; }
+    
+    .size-21 { font-size: 21px; }
+    
+    .size-24 { font-size: 24px; }
+    
+    .size-36 { font-size: 36px; }
+    
+    .size-48 { font-size: 48px; }
+    
+    .size-60 { font-size: 60px; }
+    
+    .size-72 { font-size: 72px; }      
     </style>
   </head>
   <body>
     <nav class="tab-bar">
-      <div class="left-small">
+      <div class="left title-area">
+          <h1>Justin Tieu</h1>
+      </div>
+      <div class="right">
+        <!-- <h1>100%</h1><i class="fi-battery-empty size-24"></i> -->
+      </div>
+      <!-- <div class="left-small">
         <a href="#idOfLeftMenu" role="button" aria-controls="idOfLeftMenu" aria-expanded="false" class="left-off-canvas-toggle menu-icon" ><span></span></a>
       </div>
       <div class="right tab-bar-section">
         <h1 class="title">Justin Tieu</h1>
-      </div>
+      </div> -->
     </nav>
 
-    <div class="off-canvas-wrap" data-offcanvas>
+    <!-- <div class="off-canvas-wrap" data-offcanvas>
       <div class="inner-wrap">
 
         <aside class="left-off-canvas-menu">
@@ -78,34 +110,32 @@
               <li><a target=_blank href="justintieu.pdf">Resume</a></li>
               <li><a href="contact.html">Contact</a></li>
             </ul>
-        </aside>
+        </aside> -->
 
         <!-- main content goes here -->
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vel felis id ante scelerisque egestas non nec neque. Donec nunc libero, feugiat in venenatis eu, tincidunt rutrum nisi. Ut a porttitor ipsum. Sed nisl est, tincidunt quis tellus non, faucibus hendrerit ligula. Praesent dignissim mattis nunc, sit amet hendrerit tortor sagittis nec. Nunc facilisis lorem in diam molestie, vitae euismod odio venenatis. Donec eleifend enim risus, nec posuere elit tincidu  nt quis. Ut a mi in sapien mattis pellentesque vel a lectus. Pellentesque vitae dolor felis. Fusce ac ultrices nisi, vel pellentesque nisl. Sed dapibus elit dui, congue porta orci convallis ac. Ut rutrum sollicitudin odio id luctus. Nunc blandit risus ac neque rhoncus sodales. Integer vehicula luctus cursus.</p>
-        <ul class="small-block-grid-4">
-          <li><div class="icon"><img src="img/cbsi.jpg" /></div></li>
-          <li><div class="icon"><img src="img/tvcom.jpg" /></div></li>
-          <li><div class="icon"><img src="img/chow.jpg" /></div></li>
-          <li><div class="icon"><img src="img/jacktot.png" /></div></li>
+        <ul class="small-block-grid-2 medium-block-grid-4">
+          <li>
+            <div class="icon"><a href="#"><img src="img/cbsi.jpg" /></a></div>
+            <div>CBSi</div>
+          </li>
+          <li>
+            <div class="icon"><a href="#"><img src="img/tvcom.jpg" /></a></div>
+            <div>TV.com</div>
+          </li>
+          <li>
+            <div class="icon"><a href="#"><img src="img/chow.jpg" /></a></div>
+            <div>CHOW.com</div>
+          </li>
+          <li>
+            <div class="icon"><a href="#"><img src="img/jacktot.jpg" /></a></div>
+            <div>Jacktot</div>
+          </li>
         </ul>
 
-        <p>Praesent eget diam sit amet odio dapibus porta vitae sit amet velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque non tempus velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed congue luctus condimentum. Duis arcu sem, feugiat sed leo congue, suscipit scelerisque enim. Fusce aliquet, risus ut tempus finibus, urna purus blandit mauris, sed pulvinar nibh dolor eu ligula. Duis nisi nulla, tempus vitae interdum dignissim, ornare ac lorem. Vestibulum ultricies lacinia venenatis. In ac ipsum mauris. Nulla sed sapien eget diam aliquam convallis. Phasellus bibendum velit urna, suscipit sagittis urna hendrerit vel. Phasellus bibendum imperdiet massa, accumsan tincidunt urna aliquam rutrum. Sed ut elit eu mauris sollicitudin sagittis.</p>
 
-        <p>Praesent eget diam sit amet odio dapibus porta vitae sit amet velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque non tempus velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed congue luctus condimentum. Duis arcu sem, feugiat sed leo congue, suscipit scelerisque enim. Fusce aliquet, risus ut tempus finibus, urna purus blandit mauris, sed pulvinar nibh dolor eu ligula. Duis nisi nulla, tempus vitae interdum dignissim, ornare ac lorem. Vestibulum ultricies lacinia venenatis. In ac ipsum mauris. Nulla sed sapien eget diam aliquam convallis. Phasellus bibendum velit urna, suscipit sagittis urna hendrerit vel. Phasellus bibendum imperdiet massa, accumsan tincidunt urna aliquam rutrum. Sed ut elit eu mauris sollicitudin sagittis.</p>
+      <!-- <a class="exit-off-canvas"></a> -->
 
-        <p>Praesent scelerisque nulla quis fermentum elementum. Nulla convallis vitae neque vel viverra. Sed vehicula nisi sed feugiat cursus. Aenean eu lorem pellentesque, bibendum augue sit amet, tristique dui. Donec at ipsum rhoncus, sodales urna vel, convallis leo. Mauris ipsum mauris, tincidunt in pulvinar vel, hendrerit nec leo. Donec accumsan dapibus cursus. Duis eget mollis elit. Sed eget nisl nulla. Suspendisse at augue scelerisque, condimentum elit vitae, consequat nulla. Phasellus faucibus tristique libero, non laoreet lorem sodales sit amet. In hac habitasse platea dictumst. Cras accumsan enim ipsum.</p>
-
-        <p>Pellentesque turpis felis, eleifend at malesuada feugiat, porttitor nec orci. Nunc suscipit hendrerit est, nec egestas ligula molestie in. Morbi non massa ut nulla pharetra feugiat eget eu sapien. Duis semper lorem magna, ut sagittis magna vestibulum sed. Nulla at elit dolor. Morbi blandit, nisl eget pharetra pellentesque, quam lectus porttitor est, at tincidunt massa lacus quis ligula. Duis est odio, gravida sed congue vitae, consequat eget felis. Aliquam non justo dolor. Maecenas luctus, lectus eu ornare consectetur, nisi magna pretium quam, id sollicitudin libero felis ac magna. Maecenas malesuada, nunc eu feugiat cursus, velit tellus lacinia sem, eget pellentesque neque diam sed quam. Mauris dictum ipsum in sapien feugiat, eu molestie lacus interdum. Quisque ultricies, ante sit amet commodo facilisis, odio urna pulvinar enim, ut hendrerit lectus neque in quam. Integer ultrices augue ultricies nisl porttitor, non malesuada risus tempus. Proin vestibulum ipsum id nulla iaculis, eu consectetur tellus tincidunt. Nulla et scelerisque nunc.</p>
-
-        <p>Pellentesque turpis felis, eleifend at malesuada feugiat, porttitor nec orci. Nunc suscipit hendrerit est, nec egestas ligula molestie in. Morbi non massa ut nulla pharetra feugiat eget eu sapien. Duis semper lorem magna, ut sagittis magna vestibulum sed. Nulla at elit dolor. Morbi blandit, nisl eget pharetra pellentesque, quam lectus porttitor est, at tincidunt massa lacus quis ligula. Duis est odio, gravida sed congue vitae, consequat eget felis. Aliquam non justo dolor. Maecenas luctus, lectus eu ornare consectetur, nisi magna pretium quam, id sollicitudin libero felis ac magna. Maecenas malesuada, nunc eu feugiat cursus, velit tellus lacinia sem, eget pellentesque neque diam sed quam. Mauris dictum ipsum in sapien feugiat, eu molestie lacus interdum. Quisque ultricies, ante sit amet commodo facilisis, odio urna pulvinar enim, ut hendrerit lectus neque in quam. Integer ultrices augue ultricies nisl porttitor, non malesuada risus tempus. Proin vestibulum ipsum id nulla iaculis, eu consectetur tellus tincidunt. Nulla et scelerisque nunc.</p>
-
-        <p>Pellentesque turpis felis, eleifend at malesuada feugiat, porttitor nec orci. Nunc suscipit hendrerit est, nec egestas ligula molestie in. Morbi non massa ut nulla pharetra feugiat eget eu sapien. Duis semper lorem magna, ut sagittis magna vestibulum sed. Nulla at elit dolor. Morbi blandit, nisl eget pharetra pellentesque, quam lectus porttitor est, at tincidunt massa lacus quis ligula. Duis est odio, gravida sed congue vitae, consequat eget felis. Aliquam non justo dolor. Maecenas luctus, lectus eu ornare consectetur, nisi magna pretium quam, id sollicitudin libero felis ac magna. Maecenas malesuada, nunc eu feugiat cursus, velit tellus lacinia sem, eget pellentesque neque diam sed quam. Mauris dictum ipsum in sapien feugiat, eu molestie lacus interdum. Quisque ultricies, ante sit amet commodo facilisis, odio urna pulvinar enim, ut hendrerit lectus neque in quam. Integer ultrices augue ultricies nisl porttitor, non malesuada risus tempus. Proin vestibulum ipsum id nulla iaculis, eu consectetur tellus tincidunt. Nulla et scelerisque nunc.</p>
-
-
-
-      <a class="exit-off-canvas"></a>
-
-      </div>
-    </div>
+      <!-- </div> -->
+    <!-- </div> -->
   </body>
 </html>
