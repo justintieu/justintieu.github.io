@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="css/bootstrap.css" rel="stylesheet"/>
+		<link href="css/slider.css" rel="stylesheet"/>
+		<script src="js/jquery.js"></script>
+		<script src="js/script.js"></script>
+		<script src="js/bootstrap-slider.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row pager"> 
+				<form> 
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Number of people</span>
+						<input id="ex6" type="text" data-slider-min="2" data-slider-max="20" data-slider-step="1" data-slider-value="2"/>
+						<span id="ex6CurrentSliderValLabel" style="margin-left:20px;">Current Slider Value: <span id="ex6SliderVal">2</span>
+
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">People who don't want to split</span>
+						<input id="ex7" type="text" data-slider-min="0" data-slider-max="20px" data-slider-step="1" data-slider-value="-1"/>
+						<span id="ex7CurrentSliderValLabel" style="margin-left:20px;">Current Slider Value: <span id="ex7SliderVal">0</span>
+						<!-- <input id="ex7-enabled" type="checkbox"/> Enabled -->
+					</div>
+
+					<!-- <div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Total number of people</span> <input id="numPeople" class="form-control" type="text" placeholder="Total number of people" aria-describedby="sizing-addon1"/>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">Don't want to split</span> <input id="nonsplit" class="form-control" type="text" placeholder="Number of nonsplitters"  aria-describedby="sizing-addon2"/>
+					</div> -->
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon3">Tax: </span> <input id="tax" class="form-control" type="text" placeholder="Tax percentage e.g. 0.08 for 8%"/>
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon4">Total cost: </span> <input id="totalBill" class="form-control" type="text" placeholder="Total cost"/>
+					</div>
+
+					<!-- <div class="input-group">
+						<label class="input-group-addon" id="basic-addon5">Tip included? </label> <input id="tipIncluded" class="form-control" type="checkbox"/>
+					</div>
+					<div class="input-group">
+						<label class="input-group-addon" id="basic-addon6">Round to nearest $? </label> <input id="roundUp" class="form-control" type="checkbox"/>
+					</div> -->
+				</form>
+				<div class="input-group">
+					<button id="splitBill" class="btn">Split</button>
+				</div>
+
+				<div class="row-fluid"> 
+					<div id="result">
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+</html>
