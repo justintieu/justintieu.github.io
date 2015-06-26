@@ -1,64 +1,75 @@
 <!doctype html>
 <html>
 <head>
-	<link href="css/bootstrap.css" rel="stylesheet" />
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>Split Bill Calculator</title>
+  <link href="css/bootstrap.css" rel="stylesheet" />
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Split Bill Calculator</title>
 </head>
 <body ng-app="SplitCalc">
-	<div class="page-header text-center">
-	  <h1>Split Bill Calculator</h1>
-	</div>
+  <div class="page-header text-center">
+    <h1>Split Bill Calculator</h1>
+  </div>
     <div class="main" ng-controller="MainController">
       <div class="container">
-      	<div class="row">
-			<div class="panel panel-default">
-				<div class="input-group input-group-lg">
-					<div class="input-group-addon">$</div>
-					<input type="number" class="form-control" id="bill_total" placeholder="Bill Amount">
-				</div>
-			</div>
-      	</div>
-
-      	<div class="row text-center">
-      		<div class="col-md-4" ng-repeat="data in bill_data">
-      			<h3>{{data.title}}</h3>
-      			<span>{{data.amount}}<span ng-hide="{{data.type == 'people'}}">%</span></span>
-		      	<a href="#" class="btn btn-primary {{data.class}}" ng-click="update_value(data.type, -1)"><span class="glyphicon glyphicon-menu-down"></span></a>
-      			<a href="#" class="btn btn-primary {{data.class}}" ng-click="update_value(data.type, 1)"><span class="glyphicon glyphicon-menu-up"></span></a>
-      			<div ng-show="{{data.id.length > 0}}"><input id="{{data.id}}" type="checkbox" checked> Enabled</div>
-      		</div>
-      	</div>
-
-		<br/>
-      	<div class="row text-center">
-      		<input type="text" placeholder="Name of person" id="new_name">
-      		<input type="number" placeholder="Amount" id="new_owes">
-      		<a href="#" id="add_person" class="btn btn-primary btn-lg" ng-click="add()">Add Non-splitter</a>
-      	</div>
-
-
-      	<ul class="list-group text-center">
-			<li class="list-group-item" ng-repeat="app in splitters">
-				{{app.name}} owes ${{app.owes}} <a href="#" class="btn btn-default" ng-click="remove(app.name)"><span class="glyphicon glyphicon-trash"></span></a>
-			</li>
-		</ul>
-      	
-      	<br/><br/>
-      	<div class="row text-center">
-      		<a href="#" class="btn btn-primary btn-lg" ng-click="split()">Split</a>
-      		<a href="#" class="btn btn-primary btn-lg" ng-click="clear()">Clear</a>
-      	</div>
-      	<div id="results" class="row">
-      	</div>
+        <div class="row">
+      <div class="panel panel-default">
+        <div class="input-group input-group-lg">
+          <div class="input-group-addon">$</div>
+          <input type="number" class="form-control" id="bill_total" placeholder="Bill Amount">
+        </div>
       </div>
-  	</div>
+        </div>
 
-  	<!-- Scripts -->
-	<script src="js/jquery.js"></script>
-	<script src="js/vendor/angular.min.js"></script>
-	<script src="js/script.js"></script>
+        <div class="row text-center">
+          <div class="col-md-4" ng-repeat="data in bill_data">
+            <h3>{{data.title}}</h3>
+            <span>{{data.amount}}<span ng-hide="{{data.type == 'people'}}">%</span></span>
+            <a href="#" class="btn btn-primary {{data.class}}" ng-click="update_value(data.type, -1)"><span class="glyphicon glyphicon-menu-down"></span></a>
+            <a href="#" class="btn btn-primary {{data.class}}" ng-click="update_value(data.type, 1)"><span class="glyphicon glyphicon-menu-up"></span></a>
+            <div ng-show="{{data.id.length > 0}}"><input id="{{data.id}}" type="checkbox" checked> Enabled</div>
+          </div>
+        </div>
+      <br/>
+      <div class="row text-center">
+        <div class="input-group input-group-lg">
+            <div class="input-group-addon">Name</div>
+            <input type="text" class="form-control" placeholder="Name of person" id="new_name">
+          </div>
+
+        <div class="input-group input-group-lg">
+            <div class="input-group-addon">$</div>
+            <input type="number" class="form-control" placeholder="Amount" id="new_owes">
+          </div>
+          
+        <br/>
+          <a href="#" id="add_person" class="btn btn-primary btn-lg" ng-click="add()">Add Non-splitter</a>
+
+    </div>
+
+    <div class="row text-center">
+    </div>
+
+        <ul class="list-group text-center">
+      <li class="list-group-item" ng-repeat="app in splitters">
+        {{app.name}} owes ${{app.owes}} <a href="#" class="btn btn-default" ng-click="remove(app.name)"><span class="glyphicon glyphicon-trash"></span></a>
+      </li>
+    </ul>
+        
+        <br/><br/>
+        <div class="row text-center">
+          <a href="#" class="btn btn-primary btn-lg" ng-click="split()">Split Bill</a>
+          <a href="#" class="btn btn-primary btn-lg" ng-click="clear()">Clear</a>
+        </div>
+        <div id="results" class="row">
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+  <script src="js/jquery.js"></script>
+  <script src="js/vendor/angular.min.js"></script>
+  <script src="js/script.js"></script>
 
     <!-- Modules -->
     <script src="js/app.js"></script>
