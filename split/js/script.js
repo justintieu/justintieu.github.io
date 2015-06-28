@@ -11,7 +11,7 @@ var main = function() {
 	modify_buttons('#tip_box');
 	$('#tax_value').attr({
 		'data-toggle': "modal",
-	 	'data-target': "#myModal" 
+	 	'data-target': "#taxModal" 
 	});
 }
 
