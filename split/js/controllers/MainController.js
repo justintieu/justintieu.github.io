@@ -25,14 +25,14 @@ app.controller('MainController', ['$scope', function($scope) {
     };
 
     $scope.bill_data = [$scope.people, $scope.tax, $scope.tip];
-    $scope.splitters = [];
+    $scope.nonsplitters = [];
 
 
     $scope.add = function() {
         var input_name = $("#new_name").val();
         var input_value = $("#new_owes").val() - 0;
         if (input_name && input_value) {
-            $scope.splitters.push({
+            $scope.nonsplitters.push({
                 name: input_name,
                 owes: input_value
             });
@@ -44,7 +44,11 @@ app.controller('MainController', ['$scope', function($scope) {
     }
 
     $scope.remove = function(name) {
-        $scope.splitters.pop(name);
+        for (var i = 0; i < $scope.nonsplitters.length; i++) {
+            if ($scope.nonsplitters[i].name == name) {
+                $scope.nonsplitters.splice(i, 1);
+            }
+        }
     }
 
     $scope.update_value = function(type, value) {
@@ -79,10 +83,10 @@ app.controller('MainController', ['$scope', function($scope) {
         }
         total = total.toFixed(2) - 0;
         var output = $("<div>").text("after tax: $" + total);
-        var num_nonsplitters = $scope.splitters.length;
+        var num_nonsplitters = $scope.nonsplitters.length;
         for (var i = 0; i < num_nonsplitters; i++) {
-            var n = $scope.splitters[i]['name'];
-            var o = $scope.splitters[i]['owes'];
+            var n = $scope.nonsplitters[i]['name'];
+            var o = $scope.nonsplitters[i]['owes'];
             if ($('#tax_box')[0].checked) {
                 o = o + o * ($scope.tax.amount / 100);
             }
@@ -102,7 +106,7 @@ app.controller('MainController', ['$scope', function($scope) {
 
     $scope.clear = function() {
         $("#results").html("");
-        $scope.splitters = [];
+        $scope.nonsplitters = [];
     }
 
     $scope.update_tax = function() {
