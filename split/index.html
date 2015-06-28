@@ -24,12 +24,34 @@
         <div class="row text-center">
           <div class="col-md-4" ng-repeat="data in bill_data">
             <h3>{{data.title}}</h3>
-            <span>{{data.amount}}<span ng-hide="{{data.type == 'people'}}">%</span></span>
+            <span id="{{data.amount_id}}">{{data.amount}}<span ng-hide="{{data.type == 'people'}}">%</span></span>
             <a href="#" class="btn btn-primary {{data.class}}" ng-click="update_value(data.type, -1)"><span class="glyphicon glyphicon-menu-down"></span></a>
             <a href="#" class="btn btn-primary {{data.class}}" ng-click="update_value(data.type, 1)"><span class="glyphicon glyphicon-menu-up"></span></a>
             <div ng-show="{{data.id.length > 0}}"><input id="{{data.id}}" type="checkbox" checked> Enabled</div>
           </div>
         </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Update Tax</h4>
+          </div>
+          <div class="modal-body">
+            <div class="input-group input-group-lg">
+              <input type="number" class="form-control" id="new_tax" placeholder="Tax Percentage">
+              <div class="input-group-addon">%</div>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" ng-click="update_tax()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
       <br/>
       <div class="row text-center">
         <div class="input-group input-group-lg">
@@ -69,6 +91,7 @@
     <!-- Scripts -->
   <script src="js/jquery.js"></script>
   <script src="js/vendor/angular.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <script src="js/script.js"></script>
 
     <!-- Modules -->

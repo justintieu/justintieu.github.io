@@ -4,21 +4,24 @@ app.controller('MainController', ['$scope', function($scope) {
     type: "people",
     class: "people-btn",
     id: "",
-    amount: 2
+    amount: 2,
+    amount_id: "people_value"
   };
   $scope.tax = {
     title: "Tax Percentage",
     type: "tax",
     class: "tax-btn",
     id: "tax_box",
-    amount: 9
+    amount: 9,
+    amount_id: "tax_value"
   };
   $scope.tip = {
     title: "Tip Percentage",
     type: "tip",
     class: "tip-btn",
     id: "tip_box",
-    amount: 15
+    amount: 15,
+    amount_id: "tip_value"
   };
 
   $scope.bill_data = [$scope.people, $scope.tax, $scope.tip];
@@ -91,5 +94,9 @@ app.controller('MainController', ['$scope', function($scope) {
   $scope.clear = function() {
     $("#results").html("");
     $scope.splitters = [];
+  }
+
+  $scope.update_tax = function() {
+    $scope.tax.amount = $('#new_tax').val() - 0;
   }
 }]);

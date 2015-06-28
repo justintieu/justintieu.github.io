@@ -1,18 +1,18 @@
 var modify_buttons = function(id) {
-	var new_id = '#'+id;
-	var c = "." + id.substr(0,3) + "-btn";
-	$(c).toggleClass("disabled");
+	$(id).click(function() {
+		var c = "." + id.substr(1,3) + "-btn";
+		$(c).toggleClass("disabled");
+	});
+
 }
 
 var main = function() {
-	$('#tax_box').click(function() {
-		modify_buttons(this.id);
+	modify_buttons('#tax_box');
+	modify_buttons('#tip_box');
+	$('#tax_value').attr({
+		'data-toggle': "modal",
+	 	'data-target': "#myModal" 
 	});
-
-	$('#tip_box').click(function() {
-		modify_buttons(this.id);
-	});
-
 }
 
 $(document).ready(main);
