@@ -73,39 +73,61 @@ app.controller('MainController', ['$scope', function($scope) {
     }
 
     $scope.split = function() {
+        $("#result").html("");
         var total = $('#bill_total').val() - 0;
-        if ($('#tax_box')[0].checked) {
-            total = total + total * ($scope.tax.amount / 100);
-        }
-
-        if ($('#tip_box')[0].checked) {
-            total = total + total * ($scope.tip.amount / 100);
-        }
-        total = total.toFixed(2) - 0;
-        var output = $("<div>").text("after tax: $" + total);
-        var num_nonsplitters = $scope.nonsplitters.length;
-        for (var i = 0; i < num_nonsplitters; i++) {
-            var n = $scope.nonsplitters[i]['name'];
-            var o = $scope.nonsplitters[i]['owes'];
+        if (total > 0) {
             if ($('#tax_box')[0].checked) {
-                o = o + o * ($scope.tax.amount / 100);
+                total = total + total * ($scope.tax.amount / 100);
             }
+
             if ($('#tip_box')[0].checked) {
-                o = o + o * ($scope.tip.amount / 100);
+                total = total + total * ($scope.tip.amount / 100);
             }
-            o = o.toFixed(2) - 0;
-            total -= o;
-            output.append("<br/>" + n + " owes $" + o);
+            total = total.toFixed(2) - 0;
+            $('.panel-title').text("Bill Total: " + total);
+            var num_nonsplitters = $scope.nonsplitters.length;
+            for (var i = 0; i < num_nonsplitters; i++) {
+                var n = $scope.nonsplitters[i]['name'];
+                var o = $scope.nonsplitters[i]['owes'];
+                if ($('#tax_box')[0].checked) {
+                    o = o + o * ($scope.tax.amount / 100);
+                }
+                if ($('#tip_box')[0].checked) {
+                    o = o + o * ($scope.tip.amount / 100);
+                }
+                o = o.toFixed(2) - 0;
+                total -= o;
+
+                var label = $("<label>");
+                var checkbox = $("<input>").attr("type", "checkbox");
+
+                label.append(checkbox);
+                label.append(n + " owes $" + o);
+                var li = $("<li>").attr("class", "list-group-item").append($("<div>").attr("class", "checkbox").append(label));
+
+                $("#result").append(li);
+            }
+            var num_people = $scope.people.amount - num_nonsplitters;
+            if (num_people > 0 && total >= 0) {
+                for (var i = 0; i < num_people; i++) {
+                    var label = $("<label>");
+                    var checkbox = $("<input>").attr("type", "checkbox");
+                    label.append(checkbox);
+                    label.append("person " + (i + 1) + " owes $" + (total / num_people).toFixed(2));
+                    var li = $("<li>").attr("class", "list-group-item").append($("<div>").attr("class", "checkbox").append(label));
+
+                    $("#result").append(li);
+                }
+            }
+            if ($('.result_panel').hasClass('hide')) {
+                $('.result_panel').toggleClass('hide');
+            }
         }
-        var num_people = $scope.people.amount - num_nonsplitters;
-        if (num_people > 0) {
-            output.append("<br/> everyone else pays $" + (total / num_people).toFixed(2));
-        }
-        $("#results").html(output);
     }
 
     $scope.clear = function() {
-        $("#results").html("");
+        $('.result_panel').toggleClass('hide');
+        $("#result").html("");
         $scope.nonsplitters = [];
     }
 

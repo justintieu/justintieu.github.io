@@ -19,7 +19,7 @@
                     <div class="panel panel-default">
                         <div class="input-group input-group-lg">
                             <div class="input-group-addon">$</div>
-                            <input type="number" class="form-control" id="bill_total" placeholder="Bill Amount">
+                            <input type="number" class="form-control" id="bill_total" placeholder="Bill Subtotal">
                         </div>
                     </div>
                 </div>
@@ -68,19 +68,31 @@
                         <input type="number" class="form-control" placeholder="Amount" id="new_owes">
                     </div>
 
-                    <br/>
                     <a href="#" id="add_person" class="btn btn-primary btn-lg" ng-click="add()">Add Non-splitter</a>
-
                 </div>
 
-                <div class="row text-center">
+                <br/>
+                <div class="table-responsive col-md-6 col-md-offset-4" ng-show="nonsplitters.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="person in nonsplitters">
+                                <td>{{person.name}}</td>
+                                <td>${{person.owes}}</td>
+                                <td><a href="#" class="btn btn-default" ng-click="remove(person.name)"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <ul class="list-group text-center">
-                    <li class="list-group-item" ng-repeat="app in nonsplitters">
-                        {{app.name}} owes ${{app.owes}} <a href="#" class="btn btn-default" ng-click="remove(app.name)"><span class="glyphicon glyphicon-trash"></span></a>
-                    </li>
-                </ul>
+
+                <div class="clearfix"></div>
 
                 <br/>
                 <br/>
@@ -88,7 +100,17 @@
                     <a href="#" class="btn btn-primary btn-lg" ng-click="split()">Split Bill</a>
                     <a href="#" class="btn btn-primary btn-lg" ng-click="clear()">Clear</a>
                 </div>
-                <div id="results" class="row">
+
+                <div class="result_panel panel panel-default hide">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Bill Total: </h3>
+                    </div>
+                    <div class="panel-body">
+                        Use the check boxes to confirm who has paid!
+                    </div>
+                    <ul class="list-group" id="result">
+
+                    </ul>
                 </div>
             </div>
         </div>
