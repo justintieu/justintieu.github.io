@@ -75,6 +75,7 @@ app.controller('MainController', ['$scope', function($scope) {
     $scope.split = function() {
         $("#result").html("");
         var total = $('#bill_total').val() - 0;
+        var round_up = $('#round_up')[0].checked;
         if (total > 0) {
             if ($('#tax_box')[0].checked) {
                 total = total + total * ($scope.tax.amount / 100);
@@ -95,6 +96,9 @@ app.controller('MainController', ['$scope', function($scope) {
                 if ($('#tip_box')[0].checked) {
                     o = o + o * ($scope.tip.amount / 100);
                 }
+                if(round_up) {
+                  o = Math.ceil(o);
+                }
                 o = o.toFixed(2) - 0;
                 total -= o;
 
@@ -110,10 +114,14 @@ app.controller('MainController', ['$scope', function($scope) {
             var num_people = $scope.people.amount - num_nonsplitters;
             if (num_people > 0 && total >= 0) {
                 for (var i = 0; i < num_people; i++) {
+                    var value = (total / num_people);
+                    if(round_up) {
+                      value = Math.ceil(value);
+                    }
                     var label = $("<label>");
                     var checkbox = $("<input>").attr("type", "checkbox");
                     label.append(checkbox);
-                    label.append("person " + (i + 1) + " owes $" + (total / num_people).toFixed(2));
+                    label.append("person " + (i + 1) + " owes $" + value.toFixed(2));
                     var li = $("<li>").attr("class", "list-group-item").append($("<div>").attr("class", "checkbox").append(label));
 
                     $("#result").append(li);
