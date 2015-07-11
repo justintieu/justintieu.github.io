@@ -3,132 +3,134 @@
 
     <head>
         <link href="css/bootstrap.css" rel="stylesheet" />
+        <link href="css/sticky-footer-navbar.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+        <link href="css/bootstrap-switch.min.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>Split Bill Calculator</title>
     </head>
 
     <body ng-app="SplitCalc">
-        <div class="page-header text-center">
-            <h1>Split Bill Calculator</h1>
-        </div>
-        <div class="main" ng-controller="MainController">
-            <div class="container">
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="input-group input-group-lg">
-                            <div class="input-group-addon">$</div>
-                            <input type="number" class="form-control" id="bill_total" placeholder="Bill Subtotal">
-                        </div>
+        <div class="main" ng-controller="MobileController">
+            <div ng-show="bill < 0">
+                <div class="page-header text-center">
+                    <h1>$<span id="bill_amount"></span></h1>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">7</div>
+                        <div class="col-sm-4">8</div>
+                        <div class="col-sm-4">9</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">4</div>
+                        <div class="col-sm-4">5</div>
+                        <div class="col-sm-4">6</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">1</div>
+                        <div class="col-sm-4">2</div>
+                        <div class="col-sm-4">3</div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="bill >= 0">
+                <div class="row page-header">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4 text-center"><h1>Split Bill Calculator</h1></div>
+                    <div class="col-sm-4"><h1><span class="glyphicon glyphicon-cog col-sm-4"></span></h1></div>
+                </div>
+                <div class="container">
+                    <div class="alert alert-info" role="alert" ng-show="num_persons==0">Oh no! You haven't added anyone yet. Click the button below to begin.</div>
+                    <div class="alert alert-info" role="alert" ng-show="num_persons>0">More than one
+                    </div>
+                    <div class="row" ng-repeat="person in persons"> 
+                        <div class="col-sm-4">{{person.full_name}}</div>
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4 text-right">{{person.amount_owed | currency:"$":2}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4 text-right">Subtotal</div>
+                        <div class="col-sm-4 text-right">{{bill | currency:"$":2}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4 text-right">Tax</div>
+                        <div class="col-sm-4 text-right">{{tax}}%</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4 text-right">Tip</div>
+                        <div class="col-sm-4 text-right">{{tip}}%</div>
+                    </div>
+                    <div class="row">
+
                     </div>
                 </div>
 
-                <div class="row text-center">
-                    <div class="col-md-4" ng-repeat="data in bill_data">
-                        <h3>{{data.title}}</h3>
-                        <span class="data_amount" id="{{data.amount_id}}">{{data.amount}}<span ng-hide="{{data.type == 'people'}}">%</span></span>
-                        <a href="#" class="btn btn-primary {{data.class}}" ng-click="update_value(data.type, -1)"><span class="glyphicon glyphicon-menu-down"></span></a>
-                        <a href="#" class="btn btn-primary {{data.class}}" ng-click="update_value(data.type, 1)"><span class="glyphicon glyphicon-menu-up"></span></a>
-                        <div ng-show="{{data.id.length > 0}}">
-                            <input id="{{data.id}}" type="checkbox" checked> Enabled</div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="taxModal" tabindex="-1" role="dialog" aria-labelledby="taxModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="taxModalLabel">Update Tax</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="input-group input-group-lg">
-                                    <input type="number" class="form-control" id="new_tax" placeholder="Tax Percentage">
-                                    <div class="input-group-addon">%</div>
+                <!-- Modal -->
+                <div class="modal fade" id="newPersonModal" tabindex="-1" role="dialog" aria-labelledby="newPersonModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="newPersonModalLabel">Add Person</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form class="form-horizontal" id="new_person_form">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="name" class="form-control" id="name">
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" ng-click="update_tax()">Save changes</button>
+                            <div class="form-group">
+                                <label for="amount_owed" class="col-sm-2 control-label">Amount Owed</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">$</span>
+                                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="amount_owed" placeholder="for those who are not splitting evenly" disabled>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Splitting?</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" name="splitting" id="splitting-switch" checked>
+                                </div>
+                            </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="add_new_person()">Save changes</button>
+                      </div>
                     </div>
+                  </div>
                 </div>
 
-                <br/>
-                <div class="row text-center">
-                    <div class="input-group input-group-lg">
-                        <div class="input-group-addon">Name</div>
-                        <input type="text" class="form-control" placeholder="Name of person" id="new_name">
-                    </div>
-
-                    <div class="input-group input-group-lg">
-                        <div class="input-group-addon">$</div>
-                        <input type="number" class="form-control" placeholder="Amount" id="new_owes">
-                    </div>
-
-                    <a href="#" id="add_person" class="btn btn-primary btn-lg" ng-click="add()">Add Non-splitter</a>
-                </div>
-
-                <br/>
-                <div class="table-responsive col-md-6 col-md-offset-4" ng-show="nonsplitters.length > 0">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Amount</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="person in nonsplitters">
-                                <td>{{person.name}}</td>
-                                <td>${{person.owes}}</td>
-                                <td><a href="#" class="btn btn-default" ng-click="remove(person.name)"><span class="glyphicon glyphicon-trash"></span></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-
-                <div class="clearfix"></div>
-
-                <br/>
-                <br/>
-                <div class="row text-center">
-                    <label class="btn btn-primary btn-lg">
-                      <input type="checkbox" autocomplete="off" id="round_up"> Round up?
-                    </label>
-                    <a href="#" class="btn btn-primary btn-lg" ng-click="split()">Split Bill</a>
-                    <a href="#" class="btn btn-primary btn-lg" ng-click="clear()">Clear</a>
-                </div>
-
-                <div class="result_panel panel panel-default hide">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Bill Total: </h3>
-                    </div>
-                    <div class="panel-body">
-                        Use the check boxes to confirm who has paid!
-                    </div>
-                    <ul class="list-group" id="result">
-
-                    </ul>
+                <div class="navbar navbar-default navbar-fixed-bottom">
+                    <button class="btn btn-primary btn-lg btn-block" id="add_new_person" data-toggle="modal" data-target="#newPersonModal">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Scripts -->
         <script src="js/jquery.js"></script>
+        <script src="js/bootstrap-switch.min.js"></script>
         <script src="js/vendor/angular.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/script.js"></script>
+        <script src="js/mobile.js"></script>
 
         <!-- Modules -->
         <script src="js/app.js"></script>
 
         <!-- Controllers -->
-        <script src="js/controllers/MainController.js"></script>
+        <script src="js/controllers/MobileController.js"></script>
     </body>
 
 </html>
