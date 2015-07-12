@@ -14,15 +14,17 @@
     <body ng-app="SplitCalc">
         <div class="main" ng-controller="MobileController">
             <div class="row page-header">
-                <div class="col-sm-4"></div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 col-sm-offset-4">
                     <div class="input-group input-group-lg" id="bill_amount_container">
                         <span class="input-group-addon" id="sizing-addon1">$</span>
                         <input type="number" id="bill_amount_input" class="form-control" placeholder="Bill Amount" ng-blur="set_bill()">
+                        <span class="input-group-btn">
+                            <span class="glyphicon glyphicon-cog col-sm-4" data-toggle="modal" data-target="#settingsModal"></span>
+                        </span>
                     </div>
                 </div>
-                <div class="col-sm-4"><span class="glyphicon glyphicon-cog col-sm-4" data-toggle="modal" data-target="#settingsModal"></span></div>
             </div>
+
             <div class="container">
                 <div class="alert alert-info" role="alert" ng-show="persons.length==0">Oh no! You haven't added anyone yet. Click the button below to begin.</div>
                 <div ng-show="persons.length>0">
