@@ -8,47 +8,28 @@
         <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
         <link href="css/bootstrap-switch.min.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <title>Split Bill Calculator</title>
+        <title>Divide</title>
     </head>
 
     <body ng-app="SplitCalc">
         <div class="main" ng-controller="MobileController">
-            <div ng-show="bill < 0">
-                <div class="page-header text-center">
-                    <h1>$<span id="bill_amount"></span></h1>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-4">7</div>
-                        <div class="col-sm-4">8</div>
-                        <div class="col-sm-4">9</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">4</div>
-                        <div class="col-sm-4">5</div>
-                        <div class="col-sm-4">6</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">1</div>
-                        <div class="col-sm-4">2</div>
-                        <div class="col-sm-4">3</div>
+            <div class="row page-header">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <div class="input-group input-group-lg" id="bill_amount_container">
+                        <span class="input-group-addon" id="sizing-addon1">$</span>
+                        <input type="number" id="bill_amount_input" class="form-control" placeholder="Bill Amount" ng-blur="set_bill()">
                     </div>
                 </div>
+                <div class="col-sm-4"><span class="glyphicon glyphicon-cog col-sm-4" data-toggle="modal" data-target="#settingsModal"></span></div>
             </div>
-            <div ng-show="bill >= 0">
-                <div class="row page-header">
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4 text-center"><h1>Split Bill Calculator</h1></div>
-                    <div class="col-sm-4"><h1><span class="glyphicon glyphicon-cog col-sm-4"></span></h1></div>
-                </div>
-                <div class="container">
-                    <div class="alert alert-info" role="alert" ng-show="num_persons==0">Oh no! You haven't added anyone yet. Click the button below to begin.</div>
-                    <div class="alert alert-info" role="alert" ng-show="num_persons>0">More than one
-                    </div>
+            <div class="container">
+                <div class="alert alert-info" role="alert" ng-show="persons.length==0">Oh no! You haven't added anyone yet. Click the button below to begin.</div>
+                <div ng-show="persons.length>0">
                     <div class="row" ng-repeat="person in persons"> 
-                        <div class="col-sm-4">{{person.full_name}}</div>
+                        <div class="col-sm-4"><a href="#" class="btn btn-default" ng-click="remove_person(person.name)"><span class="glyphicon glyphicon-trash"></span></a> {{person.full_name}}</div>
                         <div class="col-sm-4"></div>
-                        <div class="col-sm-4 text-right">{{person.amount_owed | currency:"$":2}}</div>
+                        <div class="col-sm-4 text-right">{{person.final_amount | currency:"$":2}}</div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4"></div>
@@ -58,19 +39,70 @@
                     <div class="row">
                         <div class="col-sm-4"></div>
                         <div class="col-sm-4 text-right">Tax</div>
-                        <div class="col-sm-4 text-right">{{tax}}%</div>
+                        <div class="col-sm-2 text-right">{{tax}}%</div>
+                        <div class="col-sm-2 text-right">{{(tax/100*bill) | currency:"$":2}}</div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4"></div>
                         <div class="col-sm-4 text-right">Tip</div>
-                        <div class="col-sm-4 text-right">{{tip}}%</div>
+                        <div class="col-sm-2 text-right">{{tip}}%</div>
+                        <div class="col-sm-2 text-right">{{(tip/100*bill) | currency:"$":2}}</div>
                     </div>
                     <div class="row">
-
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4 text-right">Total</div>
+                        <div class="col-sm-4 text-right">{{bill + (tax/100*bill) + (tip/100*bill) | currency:"$":2}}</div>
                     </div>
                 </div>
 
-                <!-- Modal -->
+                <!-- settings modal -->
+                <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="settingsModalLabel">Settings</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form class="form-horizontal" id="new_person_form">
+                            <div class="form-group">
+                                <label for="amount_owed" class="col-sm-4 control-label">Tax</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" aria-label="Amount" id="tax_percentage" placeholder="Tax Percentage" value="{{tax}}"> 
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount_owed" class="col-sm-4 control-label">Tip</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" aria-label="Amount" id="tip_percentage" placeholder="Tip Percentage" value="{{tip}}">
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount_owed" class="col-sm-4 control-label">Split at nearest dollar?</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input type="checkbox" name="rounding" id="rounding-switch">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="update_settings()">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- new person modal -->
                 <div class="modal fade" id="newPersonModal" tabindex="-1" role="dialog" aria-labelledby="newPersonModalLabel">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -81,14 +113,14 @@
                       <div class="modal-body">
                         <form class="form-horizontal" id="new_person_form">
                             <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-10">
+                                <label for="name" class="col-sm-4 control-label">Name</label>
+                                <div class="col-sm-8">
                                     <input type="name" class="form-control" id="name">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="amount_owed" class="col-sm-2 control-label">Amount Owed</label>
-                                <div class="col-sm-10">
+                                <label for="amount_owed" class="col-sm-4 control-label">Amount Owed</label>
+                                <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-addon">$</span>
                                         <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="amount_owed" placeholder="for those who are not splitting evenly" disabled>
@@ -96,8 +128,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Splitting?</label>
-                                <div class="col-sm-10">
+                                <label for="name" class="col-sm-4 control-label">Splitting Evenly?</label>
+                                <div class="col-sm-8">
                                     <input type="checkbox" name="splitting" id="splitting-switch" checked>
                                 </div>
                             </div>
