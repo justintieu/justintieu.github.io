@@ -26,33 +26,54 @@
             <div class="container">
                 <div class="alert alert-info" role="alert" ng-show="persons.length==0">Oh no! You haven't added anyone yet. Click the button below to begin.</div>
                 <div ng-show="persons.length>0">
-                    <div class="row" ng-repeat="person in persons"> 
-                        <div class="col-sm-4"><a href="#" class="btn btn-default" ng-click="remove_person(person.name)"><span class="glyphicon glyphicon-trash"></span></a> {{person.full_name}}</div>
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4 text-right">{{person.final_amount | currency:"$":2}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4 text-right">Subtotal</div>
-                        <div class="col-sm-4 text-right">{{bill | currency:"$":2}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4 text-right">Tax</div>
-                        <div class="col-sm-2 text-right">{{tax}}%</div>
-                        <div class="col-sm-2 text-right">{{(tax/100*bill) | currency:"$":2}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4 text-right">Tip</div>
-                        <div class="col-sm-2 text-right">{{tip}}%</div>
-                        <div class="col-sm-2 text-right">{{(tip/100*bill) | currency:"$":2}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4 text-right">Total</div>
-                        <div class="col-sm-4 text-right">{{bill + (tax/100*bill) + (tip/100*bill) | currency:"$":2}}</div>
-                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="row">
+                                <th class="col-sm-1"></th>
+                                <th class="col-sm-3">Name</th>
+                                <th class="col-sm-4"></th>
+                                <th class="col-sm-2"></th>
+                                <th class="col-sm-2 text-right">Amount Owed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row" ng-repeat="person in persons"> 
+                                <td class="col-sm-1"><a href="#" class="btn btn-default" ng-click="remove_person(person.name)"><span class="glyphicon glyphicon-remove"></span></a> </td>
+                                <td class="col-sm-3">{{person.full_name}}</td>
+                                <td class="col-sm-4"></td>
+                                <th class="col-sm-2"></th>
+                                <td class="col-sm-2 text-right">{{person.final_amount | currency:"$":2}}</td>
+                            </tr>
+                            <tr class="row">
+                                <td class="col-sm-1"></td>
+                                <td class="col-sm-3"></td>
+                                <td class="col-sm-4 text-right">Subtotal</td>
+                                <th class="col-sm-2"></th>
+                                <td class="col-sm-2 text-right">{{bill | currency:"$":2}}</td>
+                            </tr>
+                            <tr class="row">
+                                <td class="col-sm-1"></td>
+                                <td class="col-sm-3"></td>
+                                <td class="col-sm-4 text-right">Tax</td>
+                                <td class="col-sm-2 text-right">{{tax}}%</td>
+                                <td class="col-sm-2 text-right">{{(tax/100*bill) | currency:"$":2}}</td>
+                            </tr>
+                            <tr class="row">
+                                <td class="col-sm-1"></td>
+                                <td class="col-sm-3"></td>
+                                <td class="col-sm-4 text-right">Tip</td>
+                                <td class="col-sm-2 text-right">{{tip}}%</td>
+                                <td class="col-sm-2 text-right">{{(tip/100*bill) | currency:"$":2}}</td>
+                            </tr>
+                            <tr class="row">
+                                <td class="col-sm-1"></td>
+                                <td class="col-sm-3"></td>
+                                <td class="col-sm-4 text-right">Total</td>
+                                <th class="col-sm-2"></th>
+                                <td class="col-sm-2 text-right">{{total_bill | currency:"$":2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <!-- settings modal -->
