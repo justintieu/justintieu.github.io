@@ -23,7 +23,7 @@ app.controller('MobileController', ['$scope', function($scope) {
 
     $scope.remove_person = function(name) {
         for (var i = 0; i < $scope.persons.length; i++) {
-            if ($scope.persons[i].name == name) {
+            if ($scope.persons[i].full_name == name) {
                 if($scope.persons[i].splitting) {
                     $scope.num_splitters--;
                 }
