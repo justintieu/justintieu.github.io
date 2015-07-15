@@ -5,6 +5,7 @@ app.controller('MobileController', ['$scope', function($scope) {
     $scope.tip = 15;
     $scope.round = false;
     $scope.total_bill = 0;
+    $scope.splitters_amount = 0;
     $scope.num_splitters = 0;
     $scope.add_new_person = function() {
         var name = $('#name').val();
@@ -54,14 +55,14 @@ app.controller('MobileController', ['$scope', function($scope) {
             if(!$scope.persons[i].splitting) {
                 var curr_amount = $scope.persons[i].amount_owed + ($scope.tax/100*$scope.persons[i].amount_owed) + ($scope.tip/100*$scope.persons[i].amount_owed);
                 $scope.persons[i].final_amount = ($scope.round) ? Math.ceil(curr_amount) : curr_amount;
-                $scope.total_bill = $scope.total_bill - curr_amount;
+                $scope.splitters_amount = $scope.total_bill - curr_amount;
             }
         }
         //consider everyone after
-        if($scope.total_bill >= 0) {
+        if($scope.splitters_amount >= 0) {
             for(var i = 0; i < $scope.persons.length; i++) {
                 if($scope.persons[i].splitting) {
-                    var curr_amount = $scope.total_bill/$scope.num_splitters;
+                    var curr_amount = $scope.splitters_amount/$scope.num_splitters;
                     $scope.persons[i].final_amount = ($scope.round) ? Math.ceil(curr_amount) : curr_amount;
                 }
             }
