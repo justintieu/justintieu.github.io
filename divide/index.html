@@ -17,7 +17,7 @@
                 <div class="col-sm-4 col-sm-offset-4">
                     <div class="input-group input-group-lg" id="bill_amount_container">
                         <span class="input-group-addon" id="sizing-addon1">$</span>
-                        <input type="number" id="bill_amount_input" class="form-control" placeholder="Bill Amount" ng-blur="set_bill()">
+                        <input type="number" id="bill_amount_input" class="form-control" placeholder="Bill Subtotal" ng-blur="set_bill()">
                         <span class="input-group-btn">
                             <span class="glyphicon glyphicon-cog col-sm-4" data-toggle="modal" data-target="#settingsModal"></span>
                         </span>
@@ -32,47 +32,38 @@
                         <thead>
                             <tr class="row">
                                 <th class="col-sm-1"></th>
-                                <th class="col-sm-3">Name</th>
-                                <th class="col-sm-4"></th>
-                                <th class="col-sm-2"></th>
-                                <th class="col-sm-2 text-right">Amount Owed</th>
+                                <th class="col-sm-2">Name</th>
+                                <th class="col-sm-1 text-center">Subtotal</th>
+                                <th class="col-sm-1"></th>
+                                <th class="col-sm-1 text-center">Tax {{tax_percentage}}%</th>
+                                <th class="col-sm-1"></th>
+                                <th class="col-sm-1 text-center">Tip {{tip_percentage}}%</th>
+                                <th class="col-sm-1"></th>
+                                <th class="col-sm-2 text-center">Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="row" ng-repeat="person in persons"> 
                                 <td class="col-sm-1"><a href="#" class="btn btn-default" ng-click="remove_person(person.full_name)"><span class="glyphicon glyphicon-remove"></span></a> </td>
                                 <td class="col-sm-3">{{person.full_name}}</td>
-                                <td class="col-sm-4"></td>
-                                <th class="col-sm-2"></th>
-                                <td class="col-sm-2 text-right">{{person.final_amount | currency:"$":2}}</td>
+                                <td class="col-sm-1 text-center">{{person.subtotal | currency:"$":2}}</td> 
+                                <td class="col-sm-1 text-center">+</td>
+                                <td class="col-sm-1 text-center">{{person.tax_amount | currency:"$":2}}</td>
+                                <td class="col-sm-1 text-center">+</td>
+                                <td class="col-sm-1 text-center">{{person.tip_amount | currency:"$":2}}</td>
+                                <td class="col-sm-1 text-center">=</td>
+                                <td class="col-sm-2 text-center">{{person.subtotal + person.tax_amount + person.tip_amount | currency:"$":2}}</td>
                             </tr>
-                            <tr class="row">
+                            <tr class="row bill-final-row">
                                 <td class="col-sm-1"></td>
                                 <td class="col-sm-3"></td>
-                                <td class="col-sm-4 text-right">Subtotal</td>
-                                <th class="col-sm-2"></th>
-                                <td class="col-sm-2 text-right">{{bill | currency:"$":2}}</td>
-                            </tr>
-                            <tr class="row">
-                                <td class="col-sm-1"></td>
-                                <td class="col-sm-3"></td>
-                                <td class="col-sm-4 text-right">Tax</td>
-                                <td class="col-sm-2 text-right">{{tax}}%</td>
-                                <td class="col-sm-2 text-right">{{(tax/100*bill) | currency:"$":2}}</td>
-                            </tr>
-                            <tr class="row">
-                                <td class="col-sm-1"></td>
-                                <td class="col-sm-3"></td>
-                                <td class="col-sm-4 text-right">Tip</td>
-                                <td class="col-sm-2 text-right">{{tip}}%</td>
-                                <td class="col-sm-2 text-right">{{(tip/100*bill) | currency:"$":2}}</td>
-                            </tr>
-                            <tr class="row">
-                                <td class="col-sm-1"></td>
-                                <td class="col-sm-3"></td>
-                                <td class="col-sm-4 text-right">Total</td>
-                                <th class="col-sm-2"></th>
-                                <td class="col-sm-2 text-right">{{total_bill | currency:"$":2}}</td>
+                                <td class="col-sm-1 text-center">{{subtotal | currency:"$":2}}</td>
+                                <td class="col-sm-1 text-center">+</td>
+                                <td class="col-sm-1 text-center">{{tax_amount | currency:"$":2}}</td>
+                                <td class="col-sm-1 text-center">+</td>
+                                <td class="col-sm-1 text-center">{{tip_amount | currency:"$":2}}</td>
+                                <td class="col-sm-1 text-center">=</td>
+                                <td class="col-sm-2 text-center">{{total_bill | currency:"$":2}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -92,7 +83,7 @@
                                 <label for="amount_owed" class="col-sm-4 control-label">Tax</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" aria-label="Amount" id="tax_percentage" placeholder="Tax Percentage" value="{{tax}}"> 
+                                        <input type="number" class="form-control" aria-label="Amount" id="tax_percentage" placeholder="Tax Percentage" value="{{tax_percentage}}"> 
                                         <span class="input-group-addon">%</span>
                                     </div>
                                 </div>
@@ -101,7 +92,7 @@
                                 <label for="amount_owed" class="col-sm-4 control-label">Tip</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" aria-label="Amount" id="tip_percentage" placeholder="Tip Percentage" value="{{tip}}">
+                                        <input type="number" class="form-control" aria-label="Amount" id="tip_percentage" placeholder="Tip Percentage" value="{{tip_percentage}}">
                                         <span class="input-group-addon">%</span>
                                     </div>
                                 </div>

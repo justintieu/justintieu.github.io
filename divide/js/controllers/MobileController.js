@@ -1,34 +1,40 @@
 app.controller('MobileController', ['$scope', function($scope) {
+    $scope.splitters = [];
+    $scope.nonsplitters = [];
     $scope.persons = [];
-    $scope.bill = 0;
-    $scope.tax = 9;
-    $scope.tip = 15;
-    $scope.round = false;
+    $scope.subtotal = 0;
+    $scope.tax_percentage = 9;
+    $scope.tax_amount = 0;
+    $scope.tip_percentage = 15;
+    $scope.tip_amount = 0;
+    $scope.roundUp = false;
     $scope.total_bill = 0;
     $scope.splitters_amount = 0;
-    $scope.num_splitters = 0;
+
     $scope.add_new_person = function() {
-        var name = $('#name').val();
-        var splitting = $('input[name="splitting"]').bootstrapSwitch('state');
-        var amount_owed = (splitting) ? 0 : $('#amount_owed').val() - 0;
-        if((name.length > 0 && splitting) || (!splitting && $('#amount_owed').val().length > 0)) {
-            $scope.persons.push(new person(name, amount_owed, splitting));
+        var full_name = $('#name').val();
+        var isSplitting = $('input[name="splitting"]').bootstrapSwitch('state');
+        var subtotal = (isSplitting) ? 0 : $('#amount_owed').val() - 0;
+        if((full_name.length > 0 && isSplitting) || (!isSplitting && $('#amount_owed').val().length > 0)) {
             $('#newPersonModal').modal('hide');
-            if(splitting) {
-                $scope.num_splitters++;
+            if(isSplitting) {
+                $scope.splitters.push(new person(full_name, subtotal, isSplitting));
+            } else {
+                $scope.nonsplitters.push(new person(full_name, subtotal, isSplitting));
             }
             $scope.update_bill();
             reset_new_person_form();
         }
     }
 
-    $scope.remove_person = function(name) {
+    $scope.remove_person = function(full_name) {
         for (var i = 0; i < $scope.persons.length; i++) {
-            if ($scope.persons[i].full_name == name) {
-                if($scope.persons[i].splitting) {
-                    $scope.num_splitters--;
+            if ($scope.persons[i].full_name == full_name) {
+                if($scope.persons[i].isSplitting) {
+                    $scope.splitters.splice(i, 1); 
+                } else {
+                    $scope.nonsplitters.splice(i, 1);
                 }
-                $scope.persons.splice(i, 1);
                 break;
             }
         }
@@ -36,41 +42,62 @@ app.controller('MobileController', ['$scope', function($scope) {
     }
 
     $scope.update_settings = function() {
-        var tax_input = $('#tax_percentage').val() - 0;
-        var tip_input = $('#tip_percentage').val() - 0;
-        if(tax_input >= 0 && tax_input <= 100 && tip_input >= 0 && tip_input <= 100) {
-            $scope.tax = tax_input;
-            $scope.tip = tip_input;
-            $scope.round = $('input[name="rounding"]').bootstrapSwitch('state');
+        var tax_setting = $('#tax_percentage').val() - 0;
+        var tip_setting = $('#tip_percentage').val() - 0;
+        if(tax_setting >= 0 && tax_setting <= 100 && tip_setting >= 0 && tip_setting <= 100) {
+            $scope.tax_percentage = tax_setting;
+            $scope.tip_percentage = tip_setting;
+            $scope.roundUp = $('input[name="rounding"]').bootstrapSwitch('state');
             $('#settingsModal').modal('hide');
             $scope.update_bill();
         }
     }
 
+    $scope.update_tax = function() {
+        $scope.tax_amount = ($scope.tax_percentage/100) * $scope.subtotal;
+    }
+
+    $scope.update_tip = function() {
+        $scope.tip_amount = ($scope.tip_percentage/100) * $scope.subtotal;
+    }
+
+    $scope.update_total = function() {
+        $scope.total_bill = $scope.subtotal + $scope.tax_amount + $scope.tip_amount;
+    }
+
     $scope.update_bill = function() {
-        $scope.total_bill = $scope.bill + ($scope.tax/100*$scope.bill) + ($scope.tip/100*$scope.bill);
+        $scope.update_tax();
+        $scope.update_tip();
+        $scope.update_total();
         
         //consider nonsplitters first
-        for(var i = 0; i < $scope.persons.length; i++) {
-            if(!$scope.persons[i].splitting) {
-                var curr_amount = $scope.persons[i].amount_owed + ($scope.tax/100*$scope.persons[i].amount_owed) + ($scope.tip/100*$scope.persons[i].amount_owed);
-                $scope.persons[i].final_amount = ($scope.round) ? Math.ceil(curr_amount) : curr_amount;
-                $scope.splitters_amount = $scope.total_bill - curr_amount;
-            }
+        $scope.splitters_amount = 0;
+        for(var i = 0; i < $scope.nonsplitters.length; i++) {
+            var ns_tax = ($scope.tax_percentage/100) * $scope.nonsplitters[i].subtotal;
+            var ns_tip = ($scope.tip_percentage/100) * $scope.nonsplitters[i].subtotal;
+            $scope.nonsplitters[i].tax_amount = ns_tax;
+            $scope.nonsplitters[i].tip_amount = ns_tip;
+
+            var ns_amount = $scope.nonsplitters[i].subtotal + ns_tax + ns_tip;
+            $scope.splitters_amount += ns_amount;
         }
+
         //consider everyone after
-        if($scope.splitters_amount >= 0) {
-            for(var i = 0; i < $scope.persons.length; i++) {
-                if($scope.persons[i].splitting) {
-                    var curr_amount = $scope.splitters_amount/$scope.num_splitters;
-                    $scope.persons[i].final_amount = ($scope.round) ? Math.ceil(curr_amount) : curr_amount;
-                }
+        if($scope.splitters.length > 0) {
+            for(var i = 0; i < $scope.splitters.length; i++) {
+                var s_total = ($scope.total_bill - $scope.splitters_amount)/$scope.splitters.length;
+                var s_tt = 1+(($scope.tax_percentage+$scope.tip_percentage)/100);
+                var s_subtotal = s_total/s_tt;
+                $scope.splitters[i].subtotal = s_subtotal;
+                $scope.splitters[i].tax_amount = s_subtotal * ($scope.tax_percentage/100);
+                $scope.splitters[i].tip_amount = s_subtotal * ($scope.tip_percentage/100);
             }
         }
+        $scope.persons = $scope.splitters.concat($scope.nonsplitters);
     }
 
     $scope.set_bill = function() {
-        $scope.bill = $('#bill_amount_input').val() - 0;
+        $scope.subtotal = $('#bill_amount_input').val() - 0;
         $scope.update_bill();
     }
 }]);

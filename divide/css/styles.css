@@ -10,3 +10,7 @@
 .input-group-addon:first-child, #bill_amount_input {
 	border: none;
 }
+
+.bill-final-row {
+	border-top: 2px;
+}

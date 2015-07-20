@@ -22,11 +22,12 @@ var reset_new_person_form = function() {
     $('#amount_owed').prop("disabled", true);
 }
 
-function person(full_name, amount_owed, splitting) {
+function person(full_name, subtotal, isSplitting) {
     this.full_name = full_name;
-    this.amount_owed = amount_owed;
-    this.splitting = splitting;
-    this.final_amount = 0;
+    this.subtotal = subtotal;
+    this.isSplitting = isSplitting;
+    this.tax_amount = 0;
+    this.tip_amount = 0;
 }
 
 var main = function() {
