@@ -83,7 +83,7 @@ app.controller('MobileController', ['$scope', function($scope) {
             var s_total = ($scope.total_bill - nonsplitters_amount)/$scope.splitters.length;
             var s_tt = 1+(($scope.tax_percentage+$scope.tip_percentage)/100);
             var s_subtotal = s_total/s_tt;
-            $scope.splitters[i].subtotal = s_subtotal;
+            $scope.splitters[i].subtotal = (s_subtotal >= 0) ? s_subtotal : 0;
             $scope.splitters[i].tax_amount = s_subtotal * ($scope.tax_percentage/100);
             $scope.splitters[i].tip_amount = s_subtotal * ($scope.tip_percentage/100);
         }
