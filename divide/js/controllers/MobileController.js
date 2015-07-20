@@ -33,7 +33,7 @@ app.controller('MobileController', ['$scope', function($scope) {
                 if($scope.persons[i].isSplitting) {
                     $scope.splitters.splice(i, 1); 
                 } else {
-                    $scope.nonsplitters.splice(i, 1);
+                    $scope.nonsplitters.splice(i-$scope.splitters.length, 1);
                 }
                 break;
             }
