@@ -71,28 +71,23 @@ app.controller('MobileController', ['$scope', function($scope) {
         $scope.update_total();
         
         //consider nonsplitters first
-        $scope.splitters_amount = 0;
+        var nonsplitters_amount = 0;
         for(var i = 0; i < $scope.nonsplitters.length; i++) {
-            var ns_tax = ($scope.tax_percentage/100) * $scope.nonsplitters[i].subtotal;
-            var ns_tip = ($scope.tip_percentage/100) * $scope.nonsplitters[i].subtotal;
-            $scope.nonsplitters[i].tax_amount = ns_tax;
-            $scope.nonsplitters[i].tip_amount = ns_tip;
-
-            var ns_amount = $scope.nonsplitters[i].subtotal + ns_tax + ns_tip;
-            $scope.splitters_amount += ns_amount;
+            $scope.nonsplitters[i].tax_amount = ($scope.tax_percentage/100) * $scope.nonsplitters[i].subtotal;;
+            $scope.nonsplitters[i].tip_amount = ($scope.tip_percentage/100) * $scope.nonsplitters[i].subtotal;
+            nonsplitters_amount += ($scope.nonsplitters[i].subtotal + $scope.nonsplitters[i].tax_amount + $scope.nonsplitters[i].tip_amount);
         }
 
         //consider everyone after
-        if($scope.splitters.length > 0) {
-            for(var i = 0; i < $scope.splitters.length; i++) {
-                var s_total = ($scope.total_bill - $scope.splitters_amount)/$scope.splitters.length;
-                var s_tt = 1+(($scope.tax_percentage+$scope.tip_percentage)/100);
-                var s_subtotal = s_total/s_tt;
-                $scope.splitters[i].subtotal = s_subtotal;
-                $scope.splitters[i].tax_amount = s_subtotal * ($scope.tax_percentage/100);
-                $scope.splitters[i].tip_amount = s_subtotal * ($scope.tip_percentage/100);
-            }
+        for(var i = 0; i < $scope.splitters.length; i++) {
+            var s_total = ($scope.total_bill - nonsplitters_amount)/$scope.splitters.length;
+            var s_tt = 1+(($scope.tax_percentage+$scope.tip_percentage)/100);
+            var s_subtotal = s_total/s_tt;
+            $scope.splitters[i].subtotal = s_subtotal;
+            $scope.splitters[i].tax_amount = s_subtotal * ($scope.tax_percentage/100);
+            $scope.splitters[i].tip_amount = s_subtotal * ($scope.tip_percentage/100);
         }
+        $scope.persons = [];
         $scope.persons = $scope.splitters.concat($scope.nonsplitters);
     }
 
