@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.1/angular.min.js"></script>
+<script type="text/javascript">
+  angular.module('myApp', [])
+  .filter('bayArea', function() {
+      return function(cities, bayAreaCities, isBayAreaOnly) {
+          if(isBayAreaOnly) {
+              return cities.filter(function(city) {
+                  return (bayAreaCities.indexOf(city[0]) != -1);
+
+              });
+          } else {
+              return cities;
+          }
+      };
+  })
+  .controller('HousingReportCtrl', function($scope) {
+    $scope.searchTerm;
+    $scope.isBayAreaOnly;
+    $scope.bay_area_cities = "Alameda,Albany,American Canyon,Antioch,Atherton,Belmont,Belvedere,Benicia,Berkeley,Brentwood,Brisbane,Burlingame,Calistoga,Campbell,Clayton,Cloverdale,Colma,Concord,Corte Madera,Cotati,Cupertino,Daly City,Danville,Dixon,Dublin,East Palo Alto,El Cerrito,Emeryville,Fairfax,Fairfield,Foster City,Fremont,Gilroy,Half Moon Bay,Hayward,Healdsburg,Hercules,Hillsborough,Lafayette,Larkspur,Livermore,Los Altos,Los Altos Hills,Los Gatos,Martinez,Menlo Park,Mill Valley,Millbrae,Milpitas,Monte Sereno,Moraga,Morgan Hill,Mountain View,Napa,Newark,Novato,Oakland,Oakley,Orinda,Pacifica,Palo Alto,Petaluma,Piedmont,Pinole,Pittsburg,Pleasant Hill,Pleasanton,Portola Valley,Redwood City,Richmond,Rio Vista,Rohnert Park,Ross,St. Helena,San Anselmo,San Bruno,San Carlos,San Francisco,San Jose,San Leandro,San Mateo,San Pablo,San Rafael,San Ramon,Santa Clara,Santa Rosa,Saratoga,Sausalito,Sebastopol,Sonoma,South San Francisco,Suisun City,Sunnyvale,Tiburon,Union City,Vacaville,Vallejo,Walnut Creek,Windsor,Woodside,Yountville".split(",");
+    $scope.header = ["MARKET","STATE","AVG PRICE","RANKING"];
+
+    $scope.california_cities = [["Newport Beach","CA","$2,291,764","1"],["Palo Alto","CA","$2,066,600","2"],["Saratoga","CA","$1,979,218","3"],["Cupertino","CA","$1,659,297","4"],["Los Gatos","CA","$1,569,615","5"],["Arcadia","CA","$1,541,406","6"],["San Mateo","CA","$1,463,455","7"],["Sunnyvale","CA","$1,447,411","8"],["Redwood City","CA","$1,367,350","9"],["San Francisco","CA","$1,360,189","10"],["Santa Barbara","CA","$1,328,700","11"],["Pasadena/S. Pasadena","CA","$1,317,808","12"],["Danville","CA","$1,152,600","13"],["Campbell","CA","$1,140,905","14"],["Moraga","CA","$1,094,500","15"],["Sherman Oaks","CA","$1,087,600","16"],["Westlake Village","CA","$1,045,808","17"],["San Rafael","CA","$1,042,405","18"],["Irvine","CA","$989,860","19"],["Pleasanton","CA","$978,586","20"],["Calabasas/Agoura Hills","CA","$953,722","21"],["San Ramon","CA","$937,869","22"],["Laguna Niguel","CA","$896,402","23"],["Morgan Hill","CA","$892,396","24"],["Tustin/N. Tustin","CA","$891,151","25"],["Walnut Creek","CA","$890,165","26"],["Fremont","CA","$884,316","27"],["Encinitas","CA","$874,667","28"],["Sonoma","CA","$874,555","29"],["San Jose","CA","$871,158","30"],["Santa Clara","CA","$869,647","31"],["Huntington Beach","CA","$863,400","32"],["San Clemente","CA","$858,275","33"],["Laguna Hills","CA","$855,340","34"],["Monrovia","CA","$828,359","35"],["Dublin","CA","$817,616","36"],["Los Angeles","CA","$816,354","37"],["Costa Mesa","CA","$814,907","38"],["Novato","CA","$790,000","39"],["Yorba Linda","CA","$786,163","40"],["Napa","CA","$777,569","41"],["Rowland Heights","CA","$768,634","42"],["Glendora","CA","$760,406","43"],["Long Beach","CA","$739,455","44"],["Walnut","CA","$738,521","45"],["Mission Viejo","CA","$725,737","46"],["Gilroy","CA","$724,385","47"],["Pleasant Hill","CA","$723,490","48"],["Lake Forest","CA","$723,350","49"],["Thousand Oaks","CA","$723,076","50"],["Carlsbad","CA","$716,180","51"],["Cerritos","CA","$712,055","52"],["Claremont","CA","$706,566","53"],["Diamond Bar","CA","$701,400","54"],["Orange","CA","$698,688","55"],["Oakland","CA","$698,583","56"],["Newark","CA","$697,293","57"],["Fullerton","CA","$695,592","58"],["Rancho Santa Margarita","CA","$693,957","59"],["San Dimas","CA","$692,532","60"],["Anaheim Hills","CA","$692,150","61"],["Brea","CA","$687,138","62"],["Newbury Park","CA","$680,113","63"],["Livermore","CA","$679,360","64"],["Union City","CA","$677,652","65"],["Hacienda Heights","CA","$658,231","66"],["Poway","CA","$653,244","67"],["Placentia","CA","$653,032","68"],["La Verne","CA","$648,413","69"],["Ventura","CA","$644,811","70"],["Northridge","CA","$641,950","71"],["Chino Hills","CA","$641,679","72"],["Davis","CA","$634,710","73"],["Petaluma","CA","$630,378","74"],["San Marcos","CA","$612,345","75"],["Martinez","CA","$605,904","76"],["Buena Park","CA","$600,821","77"],["Camarillo","CA","$592,570","78"],["Upland","CA","$587,703","79"],["San Diego","CA","$584,913","80"],["Santa Rosa","CA","$584,419","81"],["West Covina","CA","$581,305","82"],["Anaheim","CA","$577,005","83"],["Truckee","CA","$570,091","84"],["Whittier","CA","$560,903","85"],["West Hills/Canoga Pk/Winnetka","CA","$558,818","86"],["Placerville","CA","$544,703","87"],["Escondido","CA","$542,859","88"],["Downey","CA","$537,676","89"],["Hayward","CA","$537,210","90"],["Simi Valley","CA","$536,967","91"],["El Dorado Hills","CA","$536,500","92"],["Alta Loma","CA","$534,992","93"],["Oxnard","CA","$529,420","94"],["Norco","CA","$524,699","95"],["Vista","CA","$521,947","96"],["Lakewood","CA","$514,260","97"],["La Mirada","CA","$513,119","98"],["Concord","CA","$512,527","99"],["Granada Hills","CA","$505,831","100"],["Oceanside","CA","$500,704","101"],["El Cajon","CA","$500,543","102"],["Cameron Park/Shingle Springs","CA","$500,168","103"],["La Mesa","CA","$497,953","104"],["Canyon Lake","CA","$493,939","105"],["Rancho Cucamonga","CA","$493,656","106"],["Garden Grove","CA","$488,794","107"],["Ramona","CA","$485,300","108"],["Auburn","CA","$482,776","109"],["Folsom","CA","$481,950","110"],["Rocklin","CA","$480,856","111"],["Fallbrook","CA","$477,746","112"],["Lakeside","CA","$473,200","113"],["El Monte","CA","$469,790","114"],["Temecula","CA","$467,421","115"],["Eastvale","CA","$461,156","116"],["Chula Vista","CA","$460,530","117"],["Covina","CA","$458,915","118"],["South Lake Tahoe","CA","$457,657","119"],["Santee","CA","$454,750","120"],["Salinas","CA","$452,129","121"],["Santa Ana","CA","$447,123","122"],["Corona","CA","$446,687","123"],["Chino","CA","$444,513","124"],["Azusa","CA","$439,891","125"],["Rohnert Park","CA","$438,254","126"],["Yucaipa","CA","$436,195","127"],["Richmond","CA","$434,235","128"],["Brentwood","CA","$430,450","129"],["Redlands","CA","$424,272","130"],["Carson","CA","$422,369","131"],["Grass Valley","CA","$413,309","132"],["Lake Arrowhead","CA","$412,213","133"],["Riverside/Riverside City","CA","$412,136","134"],["Tracy","CA","$409,320","135"],["Carmichael","CA","$404,842","136"],["Spring Valley","CA","$400,783","137"],["Murrieta","CA","$398,647","138"],["Roseville","CA","$396,924","139"],["La Puente","CA","$390,280","140"],["Oakdale","CA","$390,015","141"],["Vacaville","CA","$386,684","142"],["Valley Springs","CA","$384,854","143"],["Vallejo","CA","$378,024","144"],["Dixon","CA","$376,013","145"],["Norwalk","CA","$373,883","146"],["Elk Grove","CA","$366,520","147"],["Pomona","CA","$366,138","148"],["Fairfield","CA","$366,080","149"],["Fair Oaks","CA","$365,515","150"],["Fontana","CA","$364,863","151"],["Lincoln","CA","$362,178","152"],["Chico","CA","$361,708","153"],["Montclair","CA","$361,310","154"],["Orcutt","CA","$359,173","155"],["Ontario","CA","$359,082","156"],["Wildomar","CA","$358,295","157"],["La Quinta","CA","$357,173","158"],["Winchester","CA","$352,093","159"],["Pittsburg","CA","$346,445","160"],["Manteca","CA","$344,394","161"],["Redding","CA","$342,443","162"],["Menifee","CA","$341,982","163"],["Santa Maria","CA","$341,352","164"],["Antioch","CA","$340,162","165"],["Sonora","CA","$337,631","166"],["Lompoc","CA","$335,086","167"],["Rancho Cordova","CA","$328,077","168"],["Eureka","CA","$322,886","169"],["Highland","CA","$321,553","170"],["Anderson","CA","$319,692","171"],["Sacramento","CA","$318,253","172"],["Orangevale","CA","$317,014","173"],["Turlock","CA","$315,631","174"],["Coarsegold","CA","$313,213","175"],["Clovis","CA","$312,758","176"],["Bakersfield","CA","$310,268","177"],["Compton","CA","$308,850","178"],["Lake Elsinore","CA","$308,839","179"],["Tehachapi","CA","$301,146","180"],["Antelope","CA","$300,561","181"],["Citrus Heights","CA","$299,480","182"],["Colton","CA","$298,393","183"],["Suisun City","CA","$293,169","184"],["Plumas Lake","CA","$289,382","185"],["Patterson","CA","$287,100","186"],["Rialto","CA","$285,107","187"],["Stockton","CA","$283,992","188"],["Beaumont","CA","$283,978","189"],["Banning","CA","$280,906","190"],["Modesto","CA","$279,172","191"],["San Bernardino/S. Bernardino City","CA","$273,861","192"],["Perris","CA","$264,781","193"],["Moreno Valley","CA","$264,671","194"],["Los Banos","CA","$264,483","195"],["Merced","CA","$258,591","196"],["Hemet","CA","$257,468","197"],["Fresno","CA","$257,395","198"],["Atwater","CA","$256,300","199"],["Yuba City","CA","$254,333","200"],["Palmdale","CA","$254,074","201"],["Ceres","CA","$248,660","202"],["Hesperia","CA","$247,146","203"],["Visalia","CA","$245,750","204"],["Imperial","CA","$239,181","205"],["Live Oak","CA","$235,392","206"],["Marysville","CA","$235,385","207"],["San Jacinto","CA","$234,855","208"],["Madera","CA","$226,857","209"],["Hanford","CA","$225,615","210"],["Tulare","CA","$213,400","211"],["Lemoore","CA","$211,638","212"],["Apple Valley","CA","$207,244","213"],["Lancaster","CA","$203,234","214"],["Ridgecrest","CA","$203,075","215"],["Victorville","CA","$196,360","216"],["El Centro","CA","$193,070","217"],["Rosamond","CA","$191,186","218"],["Adelanto","CA","$158,434","219"],["Blythe","CA","$146,432","220"],["Barstow","CA","$121,547","221"],["California City","CA","$115,836","222"]];
+  });
+</script>
+<style type="text/css">
+  .checkbox {
+      display: inline-block;
+      margin-left: 30px;
+  }
+</style>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+  <div ng-app='myApp'>
+    <div ng-controller="HousingReportCtrl">
+      <table class="table table-hover">
+        <caption>
+          <div> Based on data from <a href="https://www.coldwellbanker.com/hlr/2015" target="_blank">Coldwell Banker</a></div>
+          <input ng-model="searchTerm" type="text" placeholder="Search City" class="form-control">
+          <div class="checkbox">
+            <input type="checkbox" ng-model="isBayAreaOnly"> Bay Area Only
+          </div>
+        </caption>
+        <thead>
+            <tr>
+                <th ng-repeat="title in header">{{title}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="location in california_cities | bayArea:bay_area_cities:isBayAreaOnly | filter:searchTerm">
+              <td ng-repeat="property in location">{{property}}</td>
+            </tr>
+        </tbody>
+      </ul>
+      </table>
+  </div>
+</body>
